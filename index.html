@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta name="description" content="WeFit makes daily movement more rewarding. Coming soon.">
+  <title>WeFit — Move a little. Earn a little.</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18231d;
+      --muted: #68756d;
+      --green: #b9f36a;
+      --green-dark: #416b28;
+      --paper: #f7f8f4;
+      --line: rgba(24, 35, 29, .11);
+    }
+    * { box-sizing: border-box; }
+    html { min-width: 320px; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page { min-height: 100svh; overflow: hidden; position: relative; }
+    .glow {
+      position: absolute; z-index: 0; pointer-events: none;
+      width: 660px; height: 660px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(185,243,106,.24) 0%, rgba(185,243,106,0) 68%);
+      top: 40px; left: 50%; transform: translateX(-50%);
+    }
+    header, main, footer { position: relative; z-index: 1; }
+    header {
+      height: 88px; max-width: 1180px; margin: auto; padding: 0 36px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
+    .brand-logo { display: block; width: 54px; height: 45px; object-fit: contain; }
+    .brand-name { font-size: 20px; font-weight: 750; letter-spacing: -1px; }
+    .header-note { color: var(--muted); font-size: 13px; font-weight: 550; }
+    main { max-width: 1180px; min-height: calc(100svh - 148px); margin: auto; padding: 52px 36px 72px; }
+    .hero { text-align: center; max-width: 790px; margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px;
+      border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.55);
+      color: #526248; font-size: 12px; font-weight: 700; letter-spacing: .055em; text-transform: uppercase;
+    }
+    .pulse { width: 7px; height: 7px; border-radius: 50%; background: #79b83b; box-shadow: 0 0 0 4px rgba(121,184,59,.14); }
+    h1 { margin: 26px 0 18px; font-size: clamp(48px, 8vw, 86px); line-height: .99; letter-spacing: -.075em; font-weight: 760; }
+    h1 span { color: #729c43; }
+    .intro { max-width: 500px; margin: 0 auto; color: var(--muted); font-size: 17px; line-height: 1.65; }
+    .launch-card {
+      max-width: 850px; margin: 56px auto 0; min-height: 244px; padding: 32px 38px;
+      border: 1px solid rgba(24,35,29,.08); border-radius: 28px; background: #fff;
+      box-shadow: 0 24px 70px rgba(36,53,38,.08); display: grid; grid-template-columns: 1fr 190px;
+      align-items: center; gap: 28px; text-align: left;
+    }
+    .card-kicker { color: #729c43; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h2 { margin: 10px 0 8px; font-size: 28px; letter-spacing: -.05em; }
+    .card-copy { margin: 0; max-width: 430px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .steps { display: flex; gap: 8px; margin-top: 22px; }
+    .step { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; border-radius: 10px; background: #f4f7ef; color: #465640; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .step b { color: #7ba74d; font-size: 13px; }
+    .orbit {
+      width: 176px; height: 176px; border-radius: 50%; position: relative; margin: auto;
+      display: grid; place-items: center; background: radial-gradient(circle, #f5f9ec 0 47%, transparent 48%), conic-gradient(from 5deg, #d8f7a7 0 68%, #eff7e5 68% 100%);
+    }
+    .orbit::before { content: ""; position: absolute; inset: 12px; border: 1px dashed rgba(65,107,40,.25); border-radius: 50%; }
+    .coin { position: absolute; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: #3a5c27; font-weight: 900; box-shadow: 0 5px 16px rgba(76,110,45,.15); }
+    .coin.one { top: 8px; right: 24px; font-size: 13px; }
+    .coin.two { bottom: 20px; left: 4px; width: 28px; height: 28px; font-size: 10px; }
+    .figure { font-size: 57px; filter: saturate(.8); transform: translateY(-3px); }
+    .features { display: flex; justify-content: center; gap: 44px; max-width: 850px; margin: 38px auto 0; }
+    .feature { display: flex; gap: 11px; align-items: center; color: var(--muted); font-size: 12px; font-weight: 600; }
+    .feature-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: #edf4e4; color: #638b3a; font-size: 14px; }
+    footer { max-width: 1180px; margin: auto; height: 60px; padding: 0 36px; display: flex; align-items: center; justify-content: space-between; color: #879087; font-size: 11px; }
+    footer a { color: inherit; text-decoration: none; }
+    @media (max-width: 650px) {
+      header { height: 72px; padding: 0 21px; }
+      .header-note { font-size: 11px; }
+      main { padding: 52px 20px 54px; }
+      h1 { font-size: clamp(48px, 14vw, 70px); }
+      .intro { font-size: 15px; }
+      .launch-card { margin-top: 38px; padding: 26px 22px; grid-template-columns: 1fr; gap: 20px; }
+      h2 { font-size: 24px; }
+      .steps { flex-wrap: wrap; }
+      .orbit { width: 140px; height: 140px; }
+      .figure { font-size: 46px; }
+      .features { align-items: flex-start; flex-direction: column; gap: 14px; width: fit-content; margin-top: 30px; }
+      footer { height: auto; padding: 18px 21px; gap: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="glow" aria-hidden="true"></div>
+    <header>
+      <a class="brand" href="#top" aria-label="WeFit home">
+        <img class="brand-logo" src="/wefit-logo.png" alt=""><span class="brand-name">WeFit</span>
+      </a>
+      <span class="header-note">A little movement goes a long way.</span>
+    </header>
+    <main id="top">
+      <section class="hero" aria-labelledby="headline">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> Something good is getting stronger</div>
+        <h1 id="headline">Move a little.<br><span>Earn a little.</span></h1>
+        <p class="intro">Daily reps, small wins, and rewards that keep you moving.<br>WeFit is coming soon.</p>
+      </section>
+      <section class="launch-card" aria-label="How WeFit works">
+        <div>
+          <div class="card-kicker">Your next good habit</div>
+          <h2>Make your reps count.</h2>
+          <p class="card-copy">Show up, get your movement in, and build toward rewards—one day at a time.</p>
+          <div class="steps" aria-label="Watch. Unlock. Move. Earn.">
+            <span class="step"><b>01</b> Watch</span>
+            <span class="step"><b>02</b> Unlock</span>
+            <span class="step"><b>03</b> Move</span>
+            <span class="step"><b>04</b> Earn</span>
+          </div>
+        </div>
+        <div class="orbit" aria-hidden="true">
+          <span class="coin one">+1</span><span class="coin two">W</span><span class="figure">🏃</span>
+        </div>
+      </section>
+      <section class="features" aria-label="Coming with WeFit">
+        <div class="feature"><span class="feature-icon" aria-hidden="true">↗</span>Progress at your pace</div>
+        <div class="feature"><span class="feature-icon" aria-hidden="true">✳</span>Reps that really count</div>
+        <div class="feature"><span class="feature-icon" aria-hidden="true">◎</span>Rewards for showing up</div>
+      </section>
+    </main>
+    <footer><span>© 2026 WeFit</span><span>Good things take reps.</span></footer>
+  </div>
+</body>
+</html>
